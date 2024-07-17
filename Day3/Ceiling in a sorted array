@@ -1,0 +1,22 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    vector<int> arr = {3, 5, 7, 9, 14, 18, 21};
+    int n = arr.size();
+    int x = 10;
+
+    auto itr = lower_bound(arr.begin(), arr.end(), x);
+    int idx = itr - arr.begin();
+
+    if (idx == n) {
+        cout << "Ceiling element does not exist" << endl;
+    } else {
+        cout << "Ceiling element of " << x << " is " << arr[idx] << endl;
+    }
+
+    return 0;
+}
