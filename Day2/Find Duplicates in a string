@@ -1,0 +1,21 @@
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+
+void findDuplicates(const string &input) {
+    unordered_map<char, int> charCount;
+    for (char ch : input) {
+        charCount[ch]++;
+    }
+    for (const auto &entry : charCount) {
+        if (entry.second > 1) {
+            cout << entry.first << " appears " << entry.second << " times\n";
+        }
+    }
+}
+
+int main() {
+    string inputString = "test string";
+    findDuplicates(inputString);
+    return 0;
+}
