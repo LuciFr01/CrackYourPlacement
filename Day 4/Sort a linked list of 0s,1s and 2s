@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+};
+
+void sortList(Node* head) {
+    int count[3] = {0, 0, 0};
+    Node* ptr = head;
+
+    while (ptr != nullptr) {
+        count[ptr->data]++;
+        ptr = ptr->next;
+    }
+
+    int i = 0;
+    ptr = head;
+
+    while (ptr != nullptr) {
+        if (count[i] == 0) {
+            i++;
+        } else {
+            ptr->data = i;
+            count[i]--;
+            ptr = ptr->next;
+        }
+    }
+}
+
+void push(Node** head_ref, int new_data) {
+    Node* new_node = new Node();
+    new_node->data = new_data;
+    new_node->next = (*head_ref);
+    (*head_ref) = new_node;
+}
+
+void printList(Node* node) {
+    while (node != nullptr) {
+        cout << node->data << " ";
+        node = node->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Node* head = nullptr;
+    push(&head, 0);
+    push(&head, 2);
+    push(&head, 1);
+    push(&head, 2);
+    push(&head, 0);
+    push(&head, 1);
+    push(&head, 0);
+    push(&head, 2);
+    push(&head, 1);
+
+    cout << "Linked List before Sorting" << endl;
+    printList(head);
+
+    sortList(head);
+
+    cout << "Linked List after Sorting" << endl;
+    printList(head);
+
+    return 0;
+}
