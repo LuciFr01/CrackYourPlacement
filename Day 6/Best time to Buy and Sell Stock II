@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+    int totalProfit = 0;
+    int currentPrice = prices[0];
+    for(int i = 1; i < prices.size(); i++){
+        if(currentPrice < prices[i]){
+            totalProfit += prices[i] - currentPrice;
+        }
+        currentPrice = prices[i];
+    }
+    return totalProfit;
+    }
+};
