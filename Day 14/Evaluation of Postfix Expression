@@ -1,0 +1,59 @@
+//{ Driver Code Starts
+// C++ program to evaluate value of a postfix expression
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution
+{
+    public:
+    int solve(int a,int b,char op){
+        switch(op){
+            case '+':return a+b;
+            case '-':return a-b;
+            case '*':return a*b;
+            case '/':return a/b;
+        }
+        return 0;
+    }
+    //Function to evaluate a postfix expression.
+    int evaluatePostfix(string S)
+    {   
+        stack<int> st;
+        for(auto it:S){
+            if(isdigit(it)){
+            st.push(it-'0');
+            }
+            
+            else{
+                int b=int(st.top());st.pop();
+                int a=st.top();st.pop();
+                st.push(solve(a,b,it));
+            }
+        }
+        return st.top();
+    }
+};
+
+//{ Driver Code Starts.
+
+// Driver program to test above functions
+int main()
+{
+    int t;
+    cin>>t;
+    cin.ignore(INT_MAX, '\n');
+    while(t--)
+    {
+        string S;
+        cin>>S;
+        Solution obj;
+    
+    cout<<obj.evaluatePostfix(S)<<endl;
+    }
+    return 0;
+}
+
+// } Driver Code Ends
