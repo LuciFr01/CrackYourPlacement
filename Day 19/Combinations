@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>>arr;
+    void f(int i,int k,int n,vector<int>&nums){
+        if(i == n+1){
+            if(nums.size() == k){
+                arr.push_back(nums);
+            }
+            return;
+        }
+        if(nums.size() < k){
+            nums.push_back(i);
+            f(i+1,k,n,nums);
+            nums.pop_back();
+        }
+        f(i+1,k,n,nums);
+    }
+
+
+    vector<vector<int>> combine(int n, int k) {
+        vector<int>nums;
+        f(1,k,n,nums);
+        return arr;
+    }
+};
