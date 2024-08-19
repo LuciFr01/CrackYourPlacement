@@ -1,0 +1,64 @@
+class Solution {
+public:
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        vector<string> result;
+        int currentLength = 0, totalWordLength = 0;
+        vector<string> lineWords;
+
+        for (const string& word : words) {
+            int wordLength = word.length();
+
+            if (maxWidth - currentLength > wordLength) {
+                currentLength += wordLength + 1; // account for space
+                totalWordLength += wordLength;
+                lineWords.push_back(word);
+            } 
+            else if (maxWidth - currentLength == wordLength) {
+                currentLength += wordLength;
+                totalWordLength += wordLength;
+                lineWords.push_back(word);
+            } 
+            else {
+                currentLength = 0;
+                string justifiedLine = "";
+                int totalSpaces = maxWidth - totalWordLength;
+                totalWordLength = 0;
+                int numSpacesBetweenWords = lineWords.size() - 1;
+
+                for (const string& lineWord : lineWords) {
+                    int spaces = 0;
+                    if (numSpacesBetweenWords > 0) {
+                        spaces = ceil(static_cast<double>(totalSpaces) / numSpacesBetweenWords);
+                    }
+                    string spaceStr(spaces, ' ');
+                    justifiedLine += lineWord + spaceStr;
+                    totalSpaces -= spaces;
+                    numSpacesBetweenWords--;
+                }
+                lineWords.clear();
+                justifiedLine = justifiedLine.substr(0, maxWidth);
+
+                int extraSpaces = maxWidth - justifiedLine.length();
+                justifiedLine += string(extraSpaces, ' ');
+
+                result.push_back(justifiedLine);
+
+                lineWords.push_back(word);
+                currentLength += wordLength + 1; // account for space
+                totalWordLength += wordLength;
+            }
+        }
+
+        // Process the last line
+        string lastLine = "";
+        for (const string& lineWord : lineWords) {
+            lastLine += lineWord + " ";
+        }
+        int remainingSpaces = maxWidth - lastLine.length();
+        lastLine += string(remainingSpaces, ' ');
+        lastLine = lastLine.substr(0, maxWidth);
+
+        result.push_back(lastLine);
+        return result;
+    }
+};
