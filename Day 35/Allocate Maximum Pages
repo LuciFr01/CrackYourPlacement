@@ -1,0 +1,38 @@
+    bool canSplitArray(vector<int>& nums, int k, int maxSum) {
+        long long currentSum = 0, splits = 1;
+        for (int i = 0; i < nums.size(); i++) {
+            if (currentSum + nums[i] > maxSum) {
+                currentSum = nums[i];
+                splits++;
+                if (splits > k) return false;
+            } else {
+                currentSum += nums[i];
+            }
+        }
+        return true;
+    }
+
+    long long findMinimumMaxSum(vector<int>& nums, int k) {
+        if (k > nums.size()) {
+            return -1; // Not possible to split into more parts than elements
+        }
+        
+        long long low = *max_element(nums.begin(), nums.end());
+        long long high = accumulate(nums.begin(), nums.end(), 0LL);
+
+        while (low < high) {
+            long long mid = low + (high - low) / 2;
+            if (canSplitArray(nums, k, mid)) {
+                high = mid;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return low;
+    }
+
+    long long findPages(int n, int arr[], int m) {
+        vector<int> nums(arr, arr + n);
+        return findMinimumMaxSum(nums, m);
+    }
